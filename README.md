@@ -1,8 +1,7 @@
 # database-aggregator-driver-oracle
 
-  [![NPM version][npm-image]][npm-url]
-  [![build status][travis-image]][travis-url]
-  [![npm download][download-image]][download-url]
+[![NPM version][npm-image]][npm-url]
+[![npm download][download-image]][download-url]
 
 Oracle Database driver for database-aggregator.
 
@@ -12,22 +11,28 @@ Oracle Database driver for database-aggregator.
 
 ## Usage
 
-```js
-import library from 'database-aggregator-driver-oracle';
+The source configuration must have two properties:
 
-const result = library(args);
-// result is ...
-```
+### `config.connectString`
 
-## [API Documentation](https://cheminfo.github.io/database-aggregator-driver-oracle/)
+The Oracle Database connection string
+
+### `config.query`
+
+A string with the query to make.  
+The query must return the following columns:
+
+* `ID`: The row's unique identifier
+* `PID`: The entry's unique identifier (for aggregation)
+* `MODDATE`: The last modification date for this row
+
+All other columns will be stored in the source database.
 
 ## License
 
-  [MIT](./LICENSE)
+[MIT](./LICENSE)
 
 [npm-image]: https://img.shields.io/npm/v/database-aggregator-driver-oracle.svg?style=flat-square
 [npm-url]: https://www.npmjs.com/package/database-aggregator-driver-oracle
-[travis-image]: https://img.shields.io/travis/cheminfo/database-aggregator-driver-oracle/master.svg?style=flat-square
-[travis-url]: https://travis-ci.org/cheminfo/database-aggregator-driver-oracle
 [download-image]: https://img.shields.io/npm/dm/database-aggregator-driver-oracle.svg?style=flat-square
 [download-url]: https://www.npmjs.com/package/database-aggregator-driver-oracle
