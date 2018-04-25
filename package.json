@@ -1,6 +1,6 @@
 {
   "name": "database-aggregator-driver-oracle",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Oracle Database driver for database-aggregator",
   "main": "lib/index.js",
   "module": "src/index.js",
