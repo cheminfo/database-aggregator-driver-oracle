@@ -56,9 +56,17 @@ export async function getData(config, callback, options) {
 }
 
 function convert(row) {
+  let id = row.ID;
+  if (typeof id === 'number') {
+    id = String(id);
+  }
+  let commonID = row.PID;
+  if (typeof commonID === 'number') {
+    commonID = String(commonID);
+  }
   const obj = {
-    id: row.ID,
-    commonID: row.PID,
+    id,
+    commonID,
     modificationDate: row.MODDATE || new Date(0),
     data: row
   };
