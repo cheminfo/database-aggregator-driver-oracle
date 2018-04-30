@@ -1,31 +1,20 @@
 import debugLib from 'debug';
+import OracleDB from 'oracledb';
 
-import { checkOptions, getConnection } from './oracledb';
+import { checkOptions } from './util';
 
 const debug = debugLib('aggregator:driver:oracle');
 
 export async function getIds(config) {
   checkOptions(['connectString', 'query'], config);
-  const oracleConn = await getConnection(config);
+  const oracleConn = await OracleDB.getConnection(config);
 
   let { query } = config;
   query = `SELECT id FROM (\n${query}\n) inner_table`;
   debug(query);
 
-  const resultSet = await oracleConn.execute(query);
-  debug('result set ready');
-
-  var ids = new Set();
-  let rows;
-  /* eslint-disable no-await-in-loop */
-  do {
-    rows = await resultSet.getRows(100);
-    for (let i = 0; i < rows.length; i++) {
-      ids.add(rows[i].ID.toString());
-    }
-  } while (rows.length > 0);
-  /* eslint-enable */
-  await resultSet.close();
+  const { rows } = await oracleConn.execute(query);
+  const ids = new Set(rows.map((row) => row[0].toString()));
   await oracleConn.release();
   return ids;
 }

@@ -1,13 +1,14 @@
 import debugLib from 'debug';
+import OracleDB from 'oracledb';
 
-import { checkOptions, getConnection } from './oracledb';
+import { checkOptions } from './util';
 import { formatTimestamp } from './sql';
 
 const debug = debugLib('aggregator:driver:oracle');
 
 export async function getData(config, callback, options) {
   checkOptions(['connectString', 'query'], config);
-  const oracleConn = await getConnection(config);
+  const oracleConn = await OracleDB.getConnection(config);
 
   const { query } = config;
   const { latestDate, ids } = options;
@@ -33,11 +34,13 @@ export async function getData(config, callback, options) {
   dataQuery += '\nORDER BY moddate ASC';
 
   debug(dataQuery);
-  const resultSet = await oracleConn.execute(query);
-  debug('result set ready');
+  const { resultSet } = await oracleConn.execute(dataQuery, [], {
+    outFormat: OracleDB.OBJECT,
+    resultSet: true
+  });
 
-  let rows;
   /* eslint-disable no-await-in-loop */
+  let rows;
   do {
     const entries = [];
     rows = await resultSet.getRows(100);
@@ -48,6 +51,7 @@ export async function getData(config, callback, options) {
   } while (rows.length > 0);
   /* eslint-enable */
 
+  await resultSet.close();
   await oracleConn.release();
 }
 
