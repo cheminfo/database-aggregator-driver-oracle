@@ -19,12 +19,10 @@ export async function getData(config, callback, options) {
   ) inner_table
   WHERE 1=1
   `;
-  if (latestDate) {
-    if (ids) {
-      dataQuery += `\nAND moddate < ${formatTimestamp(latestDate)}`;
-    } else {
-      dataQuery += `\nAND moddate >= ${formatTimestamp(latestDate)}`;
-    }
+  if (ids) {
+    dataQuery += `\nAND moddate < ${formatTimestamp(latestDate)}`;
+  } else {
+    dataQuery += `\nAND moddate >= ${formatTimestamp(latestDate)}`;
   }
   if (ids) {
     dataQuery += `\nAND ID IN ('${ids.join("','")}')`;
