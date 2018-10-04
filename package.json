@@ -29,14 +29,14 @@
     "testEnvironment": "node"
   },
   "dependencies": {
-    "debug": "^3.1.0",
-    "oracledb": "^2.1.2"
+    "debug": "^4.0.1",
+    "oracledb": "^3.0.0"
   },
   "devDependencies": {
-    "eslint": "^5.4.0",
-    "eslint-config-cheminfo": "^1.17.3",
-    "eslint-plugin-import": "^2.11.0",
-    "eslint-plugin-jest": "^21.15.1",
-    "rollup": "^0.64.1"
+    "eslint": "^5.6.1",
+    "eslint-config-cheminfo": "^1.18.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jest": "^21.24.1",
+    "rollup": "^0.66.4"
   }
 }
